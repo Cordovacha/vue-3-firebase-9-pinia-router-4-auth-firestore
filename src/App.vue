@@ -12,6 +12,11 @@
             >Home
           </router-link></a-menu-item
         >
+        <a-menu-item key="perfil">
+          <router-link to="/perfil" v-if="userStore.userData"
+            >Perfil
+          </router-link></a-menu-item
+        >
 
         <a-menu-item key="login"
           ><router-link to="/login" v-if="!userStore.userData"
