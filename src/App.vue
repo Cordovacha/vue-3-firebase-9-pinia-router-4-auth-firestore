@@ -7,28 +7,21 @@
         mode="horizontal"
         :style="{ lineHeight: '64px' }"
       >
-        <a-menu-item key="home">
-          <router-link to="/" v-if="userStore.userData"
-            >Home
-          </router-link></a-menu-item
+        <a-menu-item key="home" v-if="userStore.userData">
+          <router-link to="/">Home </router-link></a-menu-item
         >
-        <a-menu-item key="perfil">
-          <router-link to="/perfil" v-if="userStore.userData"
-            >Perfil
-          </router-link></a-menu-item
+        <a-menu-item key="perfil" v-if="userStore.userData">
+          <router-link to="/perfil">Perfil </router-link></a-menu-item
         >
 
-        <a-menu-item key="login"
-          ><router-link to="/login" v-if="!userStore.userData"
-            >Login
-          </router-link></a-menu-item
+        <a-menu-item key="login" v-if="!userStore.userData"
+          ><router-link to="/login">Login </router-link></a-menu-item
         >
 
-        <a-menu-item key="register"
-          ><router-link to="/register" v-if="!userStore.userData"
-            >Register
-          </router-link>
+        <a-menu-item key="register" v-if="!userStore.userData"
+          ><router-link to="/register">Register </router-link>
         </a-menu-item>
+
         <a-menu-item
           @click="userStore.logoutUser"
           v-if="userStore.userData"
@@ -38,12 +31,11 @@
         </a-menu-item>
       </a-menu>
     </a-layout-header>
-
     <a-layout-content style="padding: 0 50px">
       <div class="container">
         <div v-if="userStore.loadingSession">loading user...</div>
 
-        <router-view></router-view>
+        <router-view v-else></router-view>
       </div>
     </a-layout-content>
   </a-layout>

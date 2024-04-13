@@ -10,14 +10,15 @@ const formState = reactive({
 });
 
 const onFinish = async (value) => {
-  console.log("todo bien" + value);
+  console.log("todo correcto " + value);
   const error = await databaseStore.addUrl(formState.url);
   if (!error) {
-    formState = "";
-    return message.success("URL Agregada");
+    formState.url = "";
+    return message.success("URL agregada 💋");
   }
 
   switch (error) {
+    // buscar errores de firestore
     default:
       message.error(
         "Ocurrió un error en el servidor 💋 intentelo más tarde..."
@@ -29,35 +30,35 @@ const onFinish = async (value) => {
 
 <template>
   <a-form
-    name="addForm"
+    name="addform"
     autocomplete="off"
+    layout="vertical"
     :model="formState"
-    layour="vertical"
     @finish="onFinish"
   >
     <a-form-item
       name="url"
-      label="Ingrese una Url"
+      label="Ingrese una URL"
       :rules="[
         {
           required: true,
-          whitescape: true,
+          whitespace: true,
           pattern: /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/,
-          message: 'Ingrese una Url validad',
+          message: 'Ingrese una URL válida',
         },
       ]"
     >
-      <a-input v-model:value="formState.url"> </a-input>
+      <a-input v-model:value="formState.url"></a-input>
     </a-form-item>
     <a-form-item>
       <a-button
         type="primary"
         html-type="submit"
-        :disabled="databaseStore.loading"
         :loading="databaseStore.loading"
+        :disabled="databaseStore.loading"
       >
-        Add Url
-      </a-button>
+        Agregar URL</a-button
+      >
     </a-form-item>
   </a-form>
 </template>

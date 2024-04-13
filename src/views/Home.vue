@@ -6,10 +6,11 @@
     <add-form></add-form>
 
     <p v-if="databaseStore.loadingDoc">loading docs...</p>
+
     <a-space
       direction="vertical"
-      style="width: 100%"
       v-if="!databaseStore.loadingDoc"
+      style="width: 100%"
     >
       <a-card
         v-for="item of databaseStore.documents"
@@ -19,7 +20,7 @@
         <template #extra>
           <a-space>
             <a-popconfirm
-              title="Are you sure delete this task?"
+              ttitle="¿Estás seguro que deseas eliminar?"
               ok-text="Si"
               cancel-text="No"
               @confirm="confirm(item.id)"
@@ -32,15 +33,14 @@
               >
                 Eliminar</a-button
               >
-              <a-button
-                type="primary"
-                @click="router.push(`/editar/${item.id}`)"
-                >Editar</a-button
-              >
             </a-popconfirm>
+            <a-button type="primary" @click="router.push(`/editar/${item.id}`)"
+              >Editar</a-button
+            >
+            <a-button @click="copiarPortapapeles(item.id)">Copiar</a-button>
           </a-space>
         </template>
-        <p>Url Extensa</p>
+        <p>{{ item.name }}</p>
       </a-card>
     </a-space>
   </div>
@@ -51,6 +51,7 @@ import { useUserStore } from "../stores/user";
 import { useDatabaseStore } from "../stores/database";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
+import { Content } from "ant-design-vue/es/layout/layout";
 
 const userStore = useUserStore();
 const databaseStore = useDatabaseStore();
@@ -67,5 +68,32 @@ const confirm = async (id) => {
 
 const cancel = () => {
   message.error("No se elimino");
+};
+
+const copiarPortapapeles = async (id) => {
+  // console.log(id);
+  if (!navigator.clipboard) {
+    return message.error("No se pudo copiar al portapapeles 💋");
+  }
+
+  const path = `${window.location.origin}/${id}`;
+  // console.log(path);
+
+  const err = await navigator.clipboard.writeText(path);
+  // console.log(err);
+  if (err) {
+    message.error("No se pudo copiar al portapapeles 💋");
+  } else {
+    message.success("Se copió con éxito 💋");
+  }
+
+  // navigator.clipboard
+  //     .writeText(path)
+  //     .then(() => {
+  //         message.success("Se copió con éxito 💋");
+  //     })
+  //     .catch((err) => {
+  //         message.error("No se pudo copiar al portapapeles 💋");
+  //     });
 };
 </script>

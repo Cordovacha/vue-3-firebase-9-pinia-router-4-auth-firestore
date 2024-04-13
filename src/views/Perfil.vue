@@ -118,22 +118,15 @@ const handleChange = (info) => {
 };
 
 const onFinish = async () => {
-  console.log(fileList.value[0]);
-  const error = await userStore.updateUser(userStore.userData.displayName);
-
-  if (fileList.value[0]) {
-    const error = await userStore.updateImg(fileList.value[0]);
-    if (error) {
-      return message.error("Problemas al subir La imagen intentar mas tarde");
-    }
-    message.success("Se actualizo tu imagen");
-  }
+  const error = await userStore.updateUser(
+    userStore.userData.displayName,
+    fileList.value[0]
+  );
 
   if (!error) {
-    message.success("Se actualizo la informacion del displayName");
-  } else {
-    message.error("Ocurrio un error al actualizar el perfil");
+    return message.success("Se actualizo la informacion del displayName");
   }
+  message.error("Ocurrio un error al actualizar el perfil");
 };
 </script>
 
